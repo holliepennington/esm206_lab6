@@ -49,7 +49,57 @@ mwu <- wilcox.test(gp_1, gp_2)
 
 mwu
 ```
+to discover how to reference one of those numbers put ?test.name in the console and then use the help center on right-hand side to find the value of the documentation. 
 If the samples are from populations with the same ranks of value (medians) the probability of finding two samples with ranks *at least as different* as those in our samples is 0.28.
 I do not think this data changes my opinion from the earlier t-test and I am still not rejecting the null hypothesis << There is no significant difference in ranks between group 1 and group 2 (statistical summary). 
 
+## Linear regreesion 
+
+Simple linear regression (single dependent variable, a single independent variable)
+
+
 Median scores for group 1 (M = 14) and group 2 (M = 12) did not different significantly (Mann Whitney U test (df) = 86, p = 0.28). 
+
+```{r, include = FALSE}
+# make an exploratory plot of penguin body mass (y-axis) versus flipper length (x-axis)
+
+ggplot(data = penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point() + 
+  geom_smooth(method = "lm")
+```
+
+
+Find a linear regression model using ordinary least squares describing the relationship between flipper length and body mass for these penguins. 
+
+3 pieces: 
+
+- What type of model? 
+- What is the relationship to model (DV ~ IV(s))
+- Where is the data that's used to create this model? 
+
+```{r}
+penguin_lm <- lm(body_mass_g ~ flipper_length_mm, data = penguins)
+penguin_lm
+```
+All models are wrong and extrapolation is risky. 
+
+### broom package returns model outputs as tidy data frames 
+
+```{r}
+penguin_lm_tidy <- broom::tidy(penguin_lm)
+
+penguin_lm_tidy
+
+broom::glance(penguin_lm)
+```
+
+How can I actually include my model equation in a report? 
+
+```{r}
+extract_eq(model = penguin_lm, use_coefs = TRUE)
+```
+
+```{r}
+plot(penguin_lm)
+```
+
