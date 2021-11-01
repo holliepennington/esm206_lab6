@@ -25,3 +25,31 @@ set.seed(1424)
 gp_2 <- sample.int(30, size = 15, replace = TRUE)
 ```
 
+```{r}
+hist(gp_1)
+
+hist(gp_2)
+```
+
+Try a t-test
+```{r}
+t.test(gp_1, gp_2)
+```
+What is the meaning of the p-value. 
+If these samples were drawn from populations with the same mean, the probability of taking two random samples with mean *at least as different* as the sample means we found by random chance (taking into account spread, n) is 19.8%.
+I would not feel confident in rejecting the null hypothesis. >> There is no significant difference in means between group 1 and group 2. 
+WARNING: people get weirdly upset if you say "accept" the null. 
+
+Now let's compare this outcome to a rank-based test.
+
+## Mann Whitney U unpaired rank-based test 
+
+```{r}
+mwu <- wilcox.test(gp_1, gp_2)
+
+mwu
+```
+If the samples are from populations with the same ranks of value (medians) the probability of finding two samples with ranks *at least as different* as those in our samples is 0.28.
+I do not think this data changes my opinion from the earlier t-test and I am still not rejecting the null hypothesis << There is no significant difference in ranks between group 1 and group 2 (statistical summary). 
+
+Median scores for group 1 (M = 14) and group 2 (M = 12) did not different significantly (Mann Whitney U test (df) = 86, p = 0.28). 
